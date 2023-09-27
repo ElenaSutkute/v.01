@@ -139,3 +139,4 @@ double mediana(vector<int> vektorius){
     }
     return (double)(vektorius[(kiekis - 1) / 2] + vektorius[kiekis / 2]) / 2.0;
 }
+
