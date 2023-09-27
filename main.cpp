@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <iomanip>
 #include <algorithm>
@@ -22,6 +23,7 @@ int main()
 {
   Duomenys g[20];
   string atsakymas;
+  string atsakymas;
   int n;
   int zmones;
   int pazimys;
@@ -31,6 +33,46 @@ int main()
   mt19937 generator(rd());
   int min = 5;
   int max = 10;
+  cout<<"Ar skaityti duomenis is failo? taip/ne"<<endl;
+  cin>>tekstinis;
+  if(tekstinis=="taip"){
+        vector<Duomenys> studentai;
+
+    ifstream infile("studentai.txt");
+    if (!infile) {
+        cerr << "Error: Unable to open the file." << endl;
+        return 1;
+    }
+
+    string eile;
+    getline(infile, eile);
+    while (getline(infile, eile)) {
+        Duomenys studentas;
+        istringstream iss(eile);
+        iss >> studentas.vardas >> studentas.pavarde;
+        int pazimys;
+        while (iss >> pazimys) {
+            if (pazimys == -1) {
+                break;
+            }
+            studentas.nd.push_back(pazimys);
+        }
+        iss >> studentas.egz;
+        studentai.push_back(studentas);
+    }
+    infile.close();
+    cout << setw(15) << left << "Pavarde" << setw(15) << left << "Vardas";
+    cout << setw(14) << left << "Galutinis(Vid.)" << setw(15) << left << "Galutinis(Med.)" << endl;
+
+    for (const Duomenys& studentas : studentai) {
+        double vidurkis_nd = vidurkis(studentas.nd);
+        double galutinis_vid = round((0.4 * vidurkis_nd + 0.6 * studentas.egz) * 100.0) / 100.0;
+        double galutinis_med = round((0.4 * mediana(studentas.nd) + 0.6 * studentas.egz) * 100.0) / 100.0;
+
+        cout << setw(15) << left << studentas.pavarde << setw(15) << left << studentas.vardas;
+        cout << setw(14) << left << galutinis_vid << setw(15) << left << galutinis_med << endl;
+    }
+  }else{
   cout << "Iveskite zmoniu skaiciu: ";
   cin >> zmones;
   cout << "Pagal mediana ar vidurki? " << endl;
@@ -118,6 +160,7 @@ int main()
     }
     cout << endl;
 }
+  }
 
     return 0;
 }
