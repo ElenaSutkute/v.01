@@ -106,7 +106,6 @@ int main()
         }
     }
 
-    // Calculate the average of nd
     double vidurkis_nd = vidurkis(g[i].nd);
 
     if (kuris == "vidurki")
@@ -115,7 +114,7 @@ int main()
     }
     else
     {
-        cout << "      " << round((0.4 * vidurkis_nd + 0.6 * mediana(g[i].nd)) * 100.0) / 100.0;
+        cout << "      " << round((0.4 * mediana(g[i].nd) + 0.6 * g[i].egz) * 100.0) / 100.0;
     }
     cout << endl;
 }
