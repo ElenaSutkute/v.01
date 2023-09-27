@@ -13,7 +13,7 @@ struct Duomenys
     vector<int> nd;
     int egz;
     double vid, med;
-}; // sito kabliataskio cj nereikia
+};
 
 double vidurkis(vector<int> vektorius);
 double mediana(vector<int> vektorius);
