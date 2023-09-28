@@ -17,7 +17,7 @@ struct Duomenys
     double vid, med;
 };
 
-// Function prototypes
+
 vector<Duomenys> skaitytiDuomenisIsFailo();
 void spausdintiDuomenis(const vector<Duomenys> &studentai);
 vector<Duomenys> ivestiDuomenisRanka();
@@ -99,28 +99,60 @@ vector<Duomenys> ivestiDuomenisRanka()
     {
         Duomenys studentas;
 
-        cout << "Iveskite varda: ";
-        cin >> studentas.vardas;
-        cout << "Iveskite pavarde: ";
-        cin >> studentas.pavarde;
-        cout << "Ar norite ivesti savo pazymius? Atsakymas: taip arba ne" << endl;
 
+        cout << "Iveskite varda: ";
+        try {
+        cin >> studentas.vardas;
+        if (!isalpha(studentas.vardas.front())) {
+            throw runtime_error("Negalima sintakse vedant varda. Naudokite tik raides.");
+            }
+        }
+        catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+        }
+        cout << "Iveskite pavarde: ";
+        try {
+        cin >> studentas.pavarde;
+        if (!isalpha(studentas.pavarde.front())) {
+            throw runtime_error("Negalima sintakse vedant pavarde. Naudokite tik raides.");
+            }
+        }
+        catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+        }
+
+        cout << "Ar norite ivesti savo pazymius? Atsakymas: taip arba ne" << endl;
+        try {
         cin >> atsakymas;
+        if (atsakymas != "taip" && atsakymas != "ne") {
+            throw runtime_error("Neteisinga ivestis. Veskite 'taip' arba 'ne'.");
+            }
+        } catch (const runtime_error& e) {
+            cerr << e.what() << endl;
+        }
 
         if (atsakymas == "taip")
         {
-            cout << "Iveskite nd pazymius noredami uzbaigti ivedima, iveskite -1, maksimalus nd kiekis yra 15" << endl;
-            int pazimys;
-            while (cin >> pazimys)
-            {
-                if (pazimys == -1)
-                {
-                    break;
-                }
-                studentas.nd.push_back(pazimys);
-            }
-            cout << "Iveskite egzamino rezulata: ";
-            cin >> studentas.egz;
+cout << "Iveskite nd pazymius noredami uzbaigti ivedima, iveskite -1" << endl;
+int pazimys;
+
+while (cin >> pazimys)
+{
+    try {
+        if (pazimys == -1) {
+            break;
+        }
+        if (pazimys <= 0 || pazimys > 10) {
+            throw runtime_error("Pazimys turi buti (0,10] ribose.");
+        }
+        studentas.nd.push_back(pazimys);
+    } catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+    }
+}
+
+    cout << "Iveskite egzamino rezultata: ";
+    cin >> studentas.egz;
         }
         else
         {
@@ -157,7 +189,7 @@ pair<double, double> skaiciuotiGalutini(const Duomenys &studentas)
     double galutinis_vid = round((0.4 * vidurkis_nd + 0.6 * studentas.egz) * 100.0) / 100.0;
     double galutinis_med = round((0.4 * mediana(studentas.nd) + 0.6 * studentas.egz) * 100.0) / 100.0;
 
-    // Return both values as a pair
+
     return make_pair(galutinis_vid, galutinis_med);
 }
 
@@ -170,7 +202,7 @@ void spausdintiDuomenis(const vector<Duomenys> &studentai)
     {
         cout << setw(15) << left << studentas.pavarde << setw(15) << left << studentas.vardas;
 
-        // Calculate both galutinis_vid and galutinis_med
+
         pair<double, double> galutiniai = skaiciuotiGalutini(studentas);
 
         cout << setw(20) << fixed << setprecision(2) << left << galutiniai.first << setw(20) << left << galutiniai.second << endl;
