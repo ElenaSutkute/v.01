@@ -4,7 +4,7 @@ vector<Duomenys> skaitytiDuomenisIsFailo()
 {
     vector<Duomenys> studentai;
 
-    ifstream infile("studentai.txt");
+    ifstream infile("kursiokai.txt");
     if (!infile)
     {
         cerr << "Error: Failo atidaryti nepavyko." << endl;
