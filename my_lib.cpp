@@ -118,20 +118,17 @@ vector<Duomenys> ivestiDuomenisRanka()
             }
             cout << "Iveskite egzamino rezultata: ";
             try
-            {
-                cin >> studentas.egz;
-                if (cin.fail())
                 {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw runtime_error("Error. Veskite tik skaicius");
+                    cin>>studentas.egz;
+                    if (studentas.egz <= 0 || studentas.egz > 10)
+                    {
+                        throw runtime_error("Error. Pazimys turi buti skaicius (0,10] ribose.");
+                    }
                 }
-            }
-            catch (const runtime_error& e)
-            {
-                cerr << e.what() << endl;
-                exit(EXIT_FAILURE);
-            }
+                catch (const runtime_error& e)
+                {
+                    cerr << e.what() << endl;
+                }
 
         }
         else
