@@ -41,7 +41,7 @@ int main()
     {
         vector<Duomenys> studentai;
 
-        ifstream infile("studentai.txt");
+        ifstream infile("kursiokai.txt");
         if (!infile)
         {
             cerr << "Error: Unable to open the file." << endl;
